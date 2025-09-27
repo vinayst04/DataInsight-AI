@@ -97,6 +97,7 @@ html, body {
 .app {
   display: flex;
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for better mobile support */
   background: var(--bg-primary);
   color: var(--text-primary);
   overflow: hidden;
@@ -1101,6 +1102,114 @@ html, body {
 }
 
 @media (max-width: 768px) {
+  /* Mobile viewport fixes */
+  html, body {
+    height: 100%;
+    height: 100dvh; /* Dynamic viewport height */
+    height: -webkit-fill-available; /* Safari iOS fix */
+    overflow: hidden;
+  }
+
+  .app {
+    height: 100%;
+    height: 100dvh; /* Dynamic viewport height */
+    height: -webkit-fill-available; /* Safari iOS fix */
+    min-height: 100%;
+    min-height: 100dvh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Mobile-safe height for main container */
+  .main-container {
+    height: 100%;
+    height: 100dvh;
+    height: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex: 1;
+  }
+
+  /* Fixed header height */
+  .main-header {
+    flex-shrink: 0;
+    height: auto;
+    min-height: 60px;
+    padding: var(--spacing-sm);
+    position: relative;
+    z-index: 100;
+  }
+
+  /* Chat content takes remaining space */
+  .chat-content {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 0; /* Force flex item to respect container */
+  }
+
+  /* Messages section fills available space */
+  .messages-section {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 0; /* Force flex sizing */
+  }
+
+  /* Messages container with proper scrolling */
+  .messages-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--spacing-sm);
+    -webkit-overflow-scrolling: touch;
+    height: 0; /* Force flex behavior */
+  }
+
+  /* Welcome screen mobile fix */
+  .welcome-screen {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-sm);
+    -webkit-overflow-scrolling: touch;
+    height: 0; /* Force flex behavior */
+  }
+
+  .welcome-content {
+    padding: var(--spacing-sm);
+    margin: 0;
+    max-width: 100%;
+  }
+
+  /* Fixed input area height */
+  .input-area {
+    flex-shrink: 0;
+    padding: var(--spacing-sm);
+    position: relative;
+    z-index: 100;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-light);
+    /* Mobile keyboard adjustments */
+    padding-bottom: calc(var(--spacing-sm) + env(safe-area-inset-bottom));
+  }
+
+  /* Mobile input wrapper adjustments */
+  .input-wrapper {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  /* Prevent mobile zoom on input focus */
+  .message-input {
+    font-size: 16px; /* Prevent zoom on iOS */
+    max-height: 120px;
+    resize: none;
+  }
+
   .sidebar {
     position: fixed;
     top: 0;

@@ -97,6 +97,7 @@ html, body {
 .app {
   display: flex;
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for better mobile support */
   background: var(--bg-primary);
   color: var(--text-primary);
   overflow: hidden;
@@ -1150,6 +1151,75 @@ html, body {
 }
 
 @media (max-width: 768px) {
+  /* Mobile viewport fixes */
+  html, body {
+    height: 100%;
+    height: 100dvh; /* Dynamic viewport height */
+    height: -webkit-fill-available; /* Safari iOS fix */
+    overflow: hidden;
+  }
+
+  .app, .App {
+    height: 100%;
+    height: 100dvh; /* Dynamic viewport height */
+    height: -webkit-fill-available; /* Safari iOS fix */
+    min-height: 100%;
+    min-height: 100dvh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Mobile-safe height for containers */
+  .main-container, .chat-container {
+    height: 100%;
+    height: 100dvh;
+    height: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex: 1;
+  }
+
+  /* Fixed header height */
+  .main-header, .app-header {
+    flex-shrink: 0;
+    height: auto;
+    min-height: 60px;
+    padding: var(--spacing-sm);
+    position: relative;
+    z-index: 100;
+  }
+
+  /* Messages container with proper scrolling */
+  .messages-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--spacing-sm);
+    -webkit-overflow-scrolling: touch;
+    height: 0; /* Force flex behavior */
+  }
+
+  /* Fixed input area height */
+  .input-area, .input-container {
+    flex-shrink: 0;
+    padding: var(--spacing-sm);
+    position: relative;
+    z-index: 100;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-light);
+    /* Mobile keyboard adjustments */
+    padding-bottom: calc(var(--spacing-sm) + env(safe-area-inset-bottom));
+  }
+
+  /* Mobile input adjustments */
+  .chat-input, .message-input {
+    font-size: 16px; /* Prevent zoom on iOS */
+    max-height: 120px;
+    resize: none;
+    width: 100%;
+  }
+
   .sidebar {
     position: fixed;
     top: 0;
