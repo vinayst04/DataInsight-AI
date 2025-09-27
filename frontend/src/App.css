@@ -1259,11 +1259,16 @@ html, body {
     right: 0;
     width: 100%;
     height: 100vh;
+    height: 100dvh;
+    height: -webkit-fill-available;
     z-index: 1000;
     transform: translateX(100%);
     transition: transform 0.3s ease;
     border-left: none;
     border-top: none;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
   
   .results-panel.mobile-open {
@@ -1326,7 +1331,56 @@ html, body {
   /* Mobile Charts */
   .charts-grid {
     padding: var(--spacing-md);
-    max-height: 70vh;
+    max-height: none; /* Remove height limit for mobile */
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    flex: 1;
+    height: 0; /* Force flex behavior */
+  }
+  
+  /* Mobile Results Panel Section Scrolling */
+  .results-section,
+  .ai-analysis-section,
+  .charts-section {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Specific mobile chart section */
+  .charts-section {
+    flex: 2; /* Give charts more space */
+    min-height: 0;
+  }
+  
+  .charts-section .charts-grid {
+    flex: 1;
+    height: 100%;
+    max-height: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: var(--spacing-sm);
+  }
+  
+  /* Mobile chart items optimization */
+  .chart-item {
+    margin-bottom: var(--spacing-md);
+    break-inside: avoid;
+  }
+  
+  /* Mobile section headers stick to top while scrolling */
+  .section-header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-light);
+    flex-shrink: 0;
   }
   
   .chart-container {
