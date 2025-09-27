@@ -23,6 +23,7 @@ function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [displayMode, setDisplayMode] = useState('both'); // 'charts', 'table', 'both'
+  const [mobileResultsOpen, setMobileResultsOpen] = useState(false);
   const fileInputRef = useRef(null);
   const messagesEndRef = useRef(null);
 
@@ -488,7 +489,17 @@ function App() {
 
           {/* Data Results Panel */}
           {(currentResults || currentCharts?.length > 0 || currentAiTable) && (
-            <div className="results-panel">
+            <div className={`results-panel ${mobileResultsOpen ? 'mobile-open' : ''}`}>
+              {/* Mobile Close Button */}
+              <button 
+                className="mobile-close-btn"
+                onClick={() => setMobileResultsOpen(false)}
+                style={{ display: window.innerWidth <= 768 ? 'flex' : 'none' }}
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+                </svg>
+              </button>
               {/* Display Tables when mode is 'table' or 'both' */}
               {(displayMode === 'table' || displayMode === 'both') && currentResults && (
                 <div className="results-section">
@@ -683,6 +694,20 @@ function App() {
           className="sidebar-overlay"
           onClick={() => setSidebarOpen(false)}
         />
+      )}
+
+      {/* Mobile Results Toggle Button */}
+      {(currentResults || currentCharts?.length > 0 || currentAiTable) && (
+        <button 
+          className="mobile-results-toggle"
+          onClick={() => setMobileResultsOpen(true)}
+          style={{ display: window.innerWidth <= 768 ? 'flex' : 'none' }}
+          title="View Results"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3,3H21V5H3V3M4,6H20V8H4V6M4,9H20V11H4V9M4,12H20V14H4V12M4,15H20V17H4V15M4,18H20V20H4V18Z" />
+          </svg>
+        </button>
       )}
     </div>
   );

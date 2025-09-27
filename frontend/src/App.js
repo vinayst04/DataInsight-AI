@@ -20,6 +20,7 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [displayMode, setDisplayMode] = useState('both'); // 'charts', 'table', 'both'
   const [showAllResults, setShowAllResults] = useState(false);
+  const [mobileResultsOpen, setMobileResultsOpen] = useState(false);
   const fileInputRef = useRef(null);
   const messagesEndRef = useRef(null);
 
